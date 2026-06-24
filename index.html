@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <title>TODOアプリ</title>
 
-    <!-- ① CSS 読み込み -->
-    <link rel="stylesheet" href="style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="./style.css">
 
-    <!-- ② manifest.json を読み込む -->
-    <link rel="manifest" href="manifest.json">
+    <!-- manifest.json -->
+    <link rel="manifest" href="./manifest.json">
 
-    <!-- ③ service-worker を登録する -->
+    <!-- PWA 用アイコン（iOS対策） -->
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+    <!-- service-worker 登録 -->
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("service-worker.js");
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
+            .then(() => console.log("SW 登録成功"))
+            .catch(err => console.log("SW 登録失敗:", err));
+        });
       }
     </script>
 </head>
 <body>
 
     <h1>
-        <img src="title.png" alt="TODOアプリ" id="titleImage">
+        <img src="./title.png" alt="TODOアプリ" id="titleImage">
     </h1>
 
     <div id="genreButtons">
@@ -30,10 +37,10 @@
         <button data-genre="other">その他</button>
     </div>
 
-    <!-- ▼ 今日の日付（script.js が書き込む） -->
+    <!-- 今日の日付 -->
     <div id="today"></div>
 
-    <!-- ▼ カレンダー（ここが正しい位置） -->
+    <!-- カレンダー -->
     <div id="calendar"></div>
 
     <div class="input-area task-area">
@@ -51,6 +58,8 @@
         <ul id="taskList"></ul>
     </div>
 
-    <script src="script.js"></script>
+    <!-- メインスクリプト -->
+    <script src="./script.js"></script>
 </body>
 </html>
+
