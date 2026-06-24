@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>TODOアプリ</title>
+
+    <!-- ① CSS 読み込み -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ② manifest.json を読み込む -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- ③ service-worker を登録する -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js");
+      }
+    </script>
+</head>
+<body>
+
+    <h1>
+        <img src="title.png" alt="TODOアプリ" id="titleImage">
+    </h1>
+
+    <div id="genreButtons">
+        <button data-genre="work">仕事</button>
+        <button data-genre="task">用事</button>
+        <button data-genre="want">やりたいこと</button>
+        <button data-genre="other">その他</button>
+    </div>
+
+    <!-- ▼ 今日の日付（script.js が書き込む） -->
+    <div id="today"></div>
+
+    <!-- ▼ カレンダー（ここが正しい位置） -->
+    <div id="calendar"></div>
+
+    <div class="input-area task-area">
+        <input id="taskInput" type="text" placeholder="タスクを入力">
+    </div>
+
+    <div class="input-area date-area">
+        <input id="startDate" type="date">
+        <input id="dueDate" type="date">
+    </div>
+
+    <button id="addBtn" class="pixel-btn">追加</button>
+
+    <div class="note-area">
+        <ul id="taskList"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+body {
+    position: relative;
+}
+
+/* 半透明の白フィルター */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.4);
+    z-index: -1;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 0 20px;
+
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* タイトル画像 */
+#titleImage {
+    width: 350px;
+    display: block;
+    margin: 0 auto 18px;
+}
+
+/* ▼ ジャンルボタン */
+#genreButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 8px;
+}
+
+#genreButtons button {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #3498db;
+    background: rgba(52, 152, 219, 0.2);
+    color: #1d3f57;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#genreButtons button.active {
+    background: #3498db;
+    color: white;
+    border: 2px solid #1d6fa5;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.8);
+    transform: scale(1.05);
+}
+
+#genreButtons button:hover {
+    background: rgba(52, 152, 219, 0.4);
+}
+
+/* ▼ タスク入力欄（大きめフレーム） */
+.task-area {
+    background-image: url("task-frame.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 35px 40px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+#taskInput {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+#taskInput::placeholder {
+    color: #555;
+}
+
+/* ▼ 日付入力欄（別フレーム） */
+.date-area {
+    background-image: url("date-frame.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+
+    display: flex;
+    gap: 10px;
+}
+
+#startDate, #dueDate {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* ▼ ゲーム風の追加ボタン */
+.pixel-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #4CAF50;
+    border: 4px solid #2e7d32;
+    border-radius: 6px;
+    cursor: pointer;
+
+    box-shadow: 0 4px #1b5e20;
+    transition: 0.1s;
+}
+
+.pixel-btn:active {
+    box-shadow: 0 2px #1b5e20;
+    transform: translateY(2px);
+}
+
+/* ▼ ノート背景エリア（タスク表示） */
+.note-area {
+    background-image: url("note.png");
+
+    /* ← ここが重要：画像を切らずに表示 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 100%;
+
+    /* 1000×602 の比率に合わせた高さ */
+    height: 300px;
+
+    /* ノートの書き込み位置に合わせて調整 */
+    padding: 40px 30px;
+
+    border-radius: 12px;
+    margin-top: 20px;
+
+    /* タスクが増えたらノート内でスクロール */
+    overflow-y: auto;
+}
+
+/* ▼ タスクの見た目（手書き風） */
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#taskList li {
+    font-family: "Yomogi", "Hachi Maru Pop", "Zen Maru Gothic", sans-serif;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 12px;
+
+    /* 手書き感の揺らぎ */
+    transform: rotate(-0.5deg);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+/* ▼ ドット絵ゴミ箱アイコン削除ボタン */
+.delete-btn {
+    width: 24px;
+    height: 24px;
+    background: url("trash.png") no-repeat center / contain;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0;
+}
+
+/* ▼ 完了スタンプ（チェック時に表示） */
+#taskList li.completed {
+    position: relative;
+    opacity: 0.8; /* 少し薄くして完了感を出す（好みで調整） */
+}
+
+/* 完了画像を右上に重ねる */
+#taskList li.completed::after {
+    content: "";
+    position: absolute;
+    top: -5px;      /* 位置調整 */
+    right: -5px;
+    width: 80px;    /* スタンプの大きさ（調整可） */
+    height: 80px;
+    background: url("kanryo.png") no-repeat center / contain;
+    pointer-events: none; /* クリックを邪魔しない */
+    transform: rotate(-10deg); /* ハンコっぽく傾ける */
+    opacity: 0.9;
+}
+
+
+/* ▼ 紙吹雪のスタイル */
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: confetti-fall var(--fall-time) ease-out forwards;
+    z-index: 9999;
+}
+
+/* 最初から左右に揺れながら落ちる */
+@keyframes confetti-fall {
+    0% {
+        transform: translateX(var(--start-x)) translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateX(var(--end-x)) translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+#calendar {
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #fffef5;
+    border: 2px solid #d4c9a1;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: "Hiragino Maru Gothic ProN", sans-serif;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day {
+    padding: 6px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background: #f0e9d8;
+}
+
+.calendar-today {
+    background: #ffe9a8;
+    font-weight: bold;
+}
+
+.calendar-has-task {
+    background: #c8e6c9;
+    border: 1px solid #81c784;
+}
+
+.calendar-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+
+    background-image:url("pin.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    color: #ff3b3b; /* 赤文字 */
+    font-size: 11px;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-shadow:
+        -1px -1px 2px white,
+         1px -1px 2px white,
+        -1px  1px 2px white,
+         1px  1px 2px white;
+
+    image-rendering: pixelated; /* ★ ドット絵をくっきり表示 */
+    pointer-events: none;
+}
+
+#calendar {
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 43 / 24; /* ← 画像と同じ比率にする */
+    background-image: url("calendar_frame.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#calendar {
+    position: relative;
+    z-index: 1;
+}
+
+/* ▼ 背景の上に薄い白いレイヤーを重ねる */
+#calendar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* ← 透明度60%の白 */
+    z-index: -1; /* カレンダーの下に置く */
+    border-radius: inherit;
+}
+
+.calendar-day {
+    font-weight: bold;
+}
+
+.calendar-grid div {
+    background: rgba(255, 255, 255, 0.95); /* 半透明の白 */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.calendar-grid div:nth-child(-n+7) {
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
